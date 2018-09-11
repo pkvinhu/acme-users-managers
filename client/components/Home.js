@@ -20,6 +20,7 @@ export default class Home extends Component {
   allManagers() {
   	axios.get('/api/managers')
   	.then(res=>this.setState({managers:res.data}))
+  	console.log(managers)
   }
 
   allUsers() {

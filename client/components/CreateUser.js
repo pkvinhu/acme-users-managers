@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import Form from './Form'
 
 export default class Create extends Component {
   constructor(props) {
@@ -13,7 +14,8 @@ export default class Create extends Component {
   	this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  async handleSubmit(){
+  async handleSubmit(e){
+  	e.preventDefault()
   	const user = this.state.user
   	const manager = this.state.manager
   	const userNames = await this.props.users.map(user=>user.name)
@@ -53,24 +55,16 @@ export default class Create extends Component {
   	  <div>
   	    <h1>Create a User</h1>
   	    <hr />
-  	    <form onSubmit={handleSubmit}>
-  	      <input type='text' 
-  	      		 name='user' 
-  	      		 value={user} 
-  	      		 onChange={handleChange}></input>
- 		  <select onChange={handleChange} name='manager'>
- 		    <option>--none</option>
- 		    {users.map(manager=>{
- 		      return (
- 		        <option key={manager.id}  
- 		                value={manager.name}>{manager.name}</option>
- 		      )
- 		    })}
- 		  </select>
- 		  {cantCreate &&
- 		  	<div style={{backgroundColor: 'yellow' }}>This User is already in the system!</div>
+  	    {cantCreate &&
+ 		  	<strong style={{backgroundColor: 'yellow' }}>This User is already in the system!</strong>
  		  }
- 		 <button>Create</button>
+  	    <form onSubmit={handleSubmit}>
+  	      <Form userName='user' 
+  	            user={user} 
+  	            managerName='manager' 
+  	            handleChange={handleChange} 
+  	            users={users} />
+  	      <button>Create</button>
   	    </form>
   	  </div>
   	)

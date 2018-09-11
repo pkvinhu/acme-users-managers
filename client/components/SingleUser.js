@@ -8,7 +8,7 @@ export default function SingleUser({user, deleteUser}){
   	<div>
   	  <Link to='/users/update/${user.id}'>{user.name}</Link>
   	    {manager !== '' &&
-  	    	<h3>{manager}</h3>}
+  	    	<strong>Managed by {manager.name}</strong>}
   	  <button onClick={()=>deleteUser(user)}>remove user</button>
   	</div>
   )

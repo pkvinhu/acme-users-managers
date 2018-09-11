@@ -28,9 +28,12 @@ router.get('/managers', (req, res, next)=>{
   	  	  [Op.ne]: []
   	    }
   	  }
-  	}
+  	}]
   })
-  .then(managers=>res.send(managers))
+  .then(managers=>{
+  	console.log(managers)
+  	res.send(managers)
+  })
   .catch(next)
 })
 
@@ -54,6 +57,7 @@ router.post('/users/create', async (req, res, next)=>{
   if(req.body.manager) {
   	const manager = await User.findOne({where:{name:req.body.manager}})
   	await user.setManager(manager)
+  	await manager.setEmployees(user)
   	  	console.log('User:', user, 'Manager:', manager)
   }
   res.send(user)
