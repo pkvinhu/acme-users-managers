@@ -14,6 +14,7 @@ export default class Home extends Component {
   	  managers: []
   	}
   	this.allUsers = this.allUsers.bind(this)
+  	this.allManagers = this.allManagers.bind(this)
   }
 
   allManagers() {
@@ -32,6 +33,7 @@ export default class Home extends Component {
 
   render(){
   	const {users, managers} = this.state
+  	const {allUsers, allManagers} = this
     return (
       <div>
         <h1>Acme Users Managers</h1>
@@ -42,10 +44,15 @@ export default class Home extends Component {
           <Link to='/users/create'>Create User</Link>
         </div>
         <div>
-          <Route exact path='/users' render={()=><Users users={users} />} />
-          <Route path='/managers' render={()=><Managers managers={managers}/>} />
-          <Route path='/users/create' render={()=><CreateUser />} />
-          <Route path='/users/update' render={()=><UpdateUser />} />
+          <Route path='/users' render={()=><Users users={users} 
+          												allUsers={allUsers}/>} />
+          <Route path='/managers' render={()=><Managers managers={managers} 
+          												allManagers={allManagers}/>} />
+          <Route path='/users/create' render={()=><CreateUser users={users} 
+          													  managers={managers} 
+          													  allUsers={allUsers} 
+          													  allManagers={allManagers}/>} />
+          <Route path='/users/update/:id' render={()=><UpdateUser />} />
         </div>
       </div>
     )

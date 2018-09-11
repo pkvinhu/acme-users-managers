@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import SingleUser from './SingleUser'
+import axios from 'axios'
 
 export default class Users extends Component {
   constructor(props){
@@ -11,7 +12,8 @@ export default class Users extends Component {
   }
 
   deleteUser(user){
-  	axios.delete('/api/users/${user.id}')
+  	axios.delete(`/api/users/${user.id}`)
+  	console.log(user)
   	this.props.allUsers()
   }
 

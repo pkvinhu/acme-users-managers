@@ -20,9 +20,13 @@ router.get('/users', (req, res, next)=>{
 router.get('/managers', (req, res, next)=>{
   const Op = Sequelize.Op
   User.findAll({
-  	where:{
-  	  employees: {
-  	  	[Op.ne]: []
+  	include:[{
+  	  model: User,
+  	  as: 'employees',
+  	  where:{
+  	    employees: {
+  	  	  [Op.ne]: []
+  	    }
   	  }
   	}
   })
@@ -37,14 +41,20 @@ router.get('/users/:id', (req, res, next)=>{
   .catch(next)
 })
 
+router.get('/managers/:id', (req, res, next)=>{
+  User.findById(req.params.id)
+  .then(manager=>res.send(manager))
+  .catch(next)
+})
 
 //CREATE NEW
 router.post('/users/create', async (req, res, next)=>{
   try{
   const user = await User.create(req.body.user)
-  if(req.params.manager) {
-  	const manager = req.params.manager
-  	manager.setEmployee(user)
+  if(req.body.manager) {
+  	const manager = await User.findOne({where:{name:req.body.manager}})
+  	await user.setManager(manager)
+  	  	console.log('User:', user, 'Manager:', manager)
   }
   res.send(user)
   } catch(e){next(e)}
