@@ -19,8 +19,7 @@ export default class Home extends Component {
 
   allManagers() {
   	axios.get('/api/managers')
-  	.then(res=>this.setState({managers:res.data}))
-  	console.log(managers)
+  	.then(res=>{this.setState({managers:res.data})})
   }
 
   allUsers() {
@@ -46,14 +45,15 @@ export default class Home extends Component {
         </div>
         <div>
           <Route path='/users' render={()=><Users users={users} 
-          												allUsers={allUsers}/>} />
-          <Route path='/managers' render={()=><Managers managers={managers} 
-          												allManagers={allManagers}/>} />
+          										  allUsers={allUsers}/>} />
+          <Route path='/managers' render={()=><Managers managers={managers}
+          									   allManagers={allManagers}/>} />
           <Route path='/users/create' render={()=><CreateUser users={users} 
           													  managers={managers} 
-          													  allUsers={allUsers} 
-          													  allManagers={allManagers}/>} />
-          <Route path='/users/update/:id' render={()=><UpdateUser />} />
+          													  allUsers={allUsers}/>} />
+          <Route path='/users/update/:id' render={(props)=><UpdateUser users={users}
+          														allUsers={allUsers}
+          														id={props.match.params.id}/>} />
         </div>
       </div>
     )

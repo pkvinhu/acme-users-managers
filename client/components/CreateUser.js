@@ -8,11 +8,22 @@ export default class Create extends Component {
   	this.state={
   	  user:'',
   	  manager: '',
+  	  img: '',
   	  cantCreate: false
   	}
   	this.handleChange = this.handleChange.bind(this)
   	this.handleSubmit = this.handleSubmit.bind(this)
+  	// this.getImage = this.getImage.bind(this)
   }
+
+  // async getImage(){
+  // 	await axios.get('https://randomuser.me/api/')
+  // 	.then(res=>{
+  // 	  console.log(res.data)
+  // 	  const image = res.data.results.picture
+  // 	  this.setState({img: image})
+  // 	})
+  // }
 
   async handleSubmit(e){
   	e.preventDefault()
@@ -20,6 +31,7 @@ export default class Create extends Component {
   	const manager = this.state.manager
   	const userNames = await this.props.users.map(user=>user.name)
   	if(!userNames.includes(user) && manager !== '') {
+  	  // await this.getImage()
   	  await axios.post('/api/users/create', {user: 
   	  										{name: this.state.user}, 
   	  										 manager:this.state.manager})
@@ -30,6 +42,7 @@ export default class Create extends Component {
   	} 
 
   	else if(!userNames.includes(user) && manager === '') {
+  	  await this.getImage()
   	  await axios.post('/api/users/create', {user: {name:this.state.user}})
   	  this.props.allUsers()
   	  this.setState({user: '',
@@ -44,7 +57,7 @@ export default class Create extends Component {
   	this.setState({
   	  [e.target.name]: e.target.value
   	})
-  	console.log(this.state.user)
+
   }
 
   render() {
