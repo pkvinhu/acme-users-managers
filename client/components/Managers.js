@@ -18,12 +18,12 @@ export default class Managers extends Component {
   	    <hr />
         {managers.map(manager=>{
           return (
-            <Fragment key={manager.id}>
-            <div style={{display: 'flex'}} className='col-3'>
+            <div className='container' key={manager.id}>
+            <div style={{display: 'flex', flex: '3'}} className='col-3'>
             <img src={manager.img}/>
             <h2>{manager.name}</h2>
             </div>
-            </Fragment>
+            </div>
           )
         })}
   	  </div>

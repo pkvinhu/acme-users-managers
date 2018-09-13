@@ -13,7 +13,6 @@ export default class Users extends Component {
 
   deleteUser(user){
   	axios.delete(`/api/users/${user.id}`)
-  	console.log(user)
   	this.props.allUsers()
   }
 

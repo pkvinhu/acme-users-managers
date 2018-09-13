@@ -8,7 +8,7 @@ export default class Create extends Component {
   	this.state={
   	  user:'',
   	  manager: '',
-  	  img: '',
+  	  // img: '',
   	  cantCreate: false
   	}
   	this.handleChange = this.handleChange.bind(this)
@@ -42,7 +42,7 @@ export default class Create extends Component {
   	} 
 
   	else if(!userNames.includes(user) && manager === '') {
-  	  await this.getImage()
+  	  // await this.getImage()
   	  await axios.post('/api/users/create', {user: {name:this.state.user}})
   	  this.props.allUsers()
   	  this.setState({user: '',

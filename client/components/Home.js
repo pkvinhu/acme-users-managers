@@ -5,29 +5,30 @@ import Users from './Users'
 import Managers from './Managers'
 import CreateUser from './CreateUser'
 import UpdateUser from './UpdateUser'
+import store, {getUsers, getManagers} from '../redux/store'
 
 export default class Home extends Component {
   constructor(){
   	super()
-  	this.state = {
-  	  users: [],
-  	  managers: []
-  	}
+  	this.state = store.getState()
   	this.allUsers = this.allUsers.bind(this)
   	this.allManagers = this.allManagers.bind(this)
   }
 
   allManagers() {
   	axios.get('/api/managers')
-  	.then(res=>{this.setState({managers:res.data})})
+  	.then(res=>store.dispatch(getManagers(res.data)))
+  	// .then(res=>{this.setState({managers:res.data})})
   }
 
   allUsers() {
   	axios.get('/api/users')
-  	.then(res=>this.setState({users:res.data}))
+  	.then(res=>store.dispatch(getUsers(res.data)))
+  	// .then(res=>this.setState({users:res.data}))
   }
 
   componentDidMount(){
+  	store.subscribe(()=>this.setState(store.getState()))
   	this.allUsers()
   }
 
